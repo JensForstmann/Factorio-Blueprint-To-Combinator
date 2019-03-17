@@ -638,7 +638,7 @@ return output;}}
 			let json = JSON.parse(jsonString);
 			
 			let entities = {};
-			if (typeof json.blueprint.entities === "array") json.blueprint.entities.forEach(e => {
+			if (json.blueprint && json.blueprint.entities) json.blueprint.entities.forEach(e => {
 				if (entities[e.name] == undefined) entities[e.name] = 0;
 				entities[e.name]++;
 				if (e.items !== undefined) {
@@ -649,7 +649,7 @@ return output;}}
 					}
 				}
 			});
-			if (typeof json.blueprint.tiles === "array") json.blueprint.tiles.forEach(e => {
+			if (json.blueprint && json.blueprint.tiles) json.blueprint.tiles.forEach(e => {
 				if (entities[e.name] == undefined) entities[e.name] = 0;
 				entities[e.name]++;
 				if (e.items !== undefined) {
