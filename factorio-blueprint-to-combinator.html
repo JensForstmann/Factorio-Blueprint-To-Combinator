@@ -619,6 +619,8 @@ return output;}}
 		let convert = () => {
 			let inputStringTextArea = document.getElementById("inputString");
 			let outputStringTextArea = document.getElementById("outputString");
+			let decodedInputStringTextArea = document.getElementById("decodedInputString");
+			let decodedOutputStringTextArea = document.getElementById("decodedOutputString");
 			let maxSignalCount = document.getElementById("maxSignalCount").value;
 			let itemList = document.getElementById("itemList");
 			
@@ -636,29 +638,48 @@ return output;}}
 			let inflate = pako.inflate(binary);
 			let jsonString = new TextDecoder("utf-8").decode(inflate);
 			let json = JSON.parse(jsonString);
+
+			decodedInputStringTextArea.value = JSON.stringify(json, null, 2);
+
 			
 			let entities = {};
-			if (json.blueprint && json.blueprint.entities) json.blueprint.entities.forEach(e => {
-				if (entities[e.name] == undefined) entities[e.name] = 0;
-				entities[e.name]++;
-				if (e.items !== undefined) {
-					for (let name in e.items) {
-						let count = e.items[name];
-						if (entities[name] == undefined) entities[name] = 0;
-						entities[name] += count;
+
+			let blueprints = [];
+
+			if (json.blueprint) blueprints = [json];
+			if (json.blueprint_book && json.blueprint_book.blueprints) blueprints = json.blueprint_book.blueprints;
+
+			blueprints.forEach(blueprint => {
+				if (blueprint.blueprint && blueprint.blueprint.entities) blueprint.blueprint.entities.forEach(e => {
+					let inc = 1;
+					if (e.name === "straight-rail") {
+						e.name = "rail";
 					}
-				}
-			});
-			if (json.blueprint && json.blueprint.tiles) json.blueprint.tiles.forEach(e => {
-				if (entities[e.name] == undefined) entities[e.name] = 0;
-				entities[e.name]++;
-				if (e.items !== undefined) {
-					for (let name in e.items) {
-						let count = e.items[name];
-						if (entities[name] == undefined) entities[name] = 0;
-						entities[name] += count;
+					if (e.name === "curved-rail") {
+						inc = 4;
+						e.name = "rail";
 					}
-				}
+					if (entities[e.name] == undefined) entities[e.name] = 0;
+					entities[e.name] += inc;
+					if (e.items !== undefined) {
+						for (let name in e.items) {
+							let count = e.items[name];
+							if (entities[name] == undefined) entities[name] = 0;
+							entities[name] += count;
+						}
+					}
+				});
+				if (blueprint.blueprint && blueprint.blueprint.tiles) blueprint.blueprint.tiles.forEach(e => {
+					if (entities[e.name] == undefined) entities[e.name] = 0;
+					entities[e.name]++;
+					if (e.items !== undefined) {
+						for (let name in e.items) {
+							let count = e.items[name];
+							if (entities[name] == undefined) entities[name] = 0;
+							entities[name] += count;
+						}
+					}
+				});
 			});
 			
 			//console.log(entities);
@@ -727,6 +748,7 @@ return output;}}
 			let outputString = "0" + base64;
 			
 			outputStringTextArea.value = outputString;
+			decodedOutputStringTextArea.value = JSON.stringify(bp, null, 2);
 			
 		};
 	</script>
@@ -747,6 +769,19 @@ return output;}}
 <br/>
 Item List
 <span id="itemList"></span>
+
+<br/>
+<br/>
+<br/>
+<hr/>
+<br/>
+<br/>
+
+<label for="decodedInputString">Debug: Decoded Input</label><br/>
+<textarea id="decodedInputString" class="spoiler"></textarea><br/>
+
+<label for="decodedOutputString">Debug: Decoded Input</label><br/>
+<textarea id="decodedOutputString" class="spoiler"></textarea><br/>
 
 </body>
 </html>
