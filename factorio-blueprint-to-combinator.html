@@ -670,6 +670,9 @@ return output;}}
 					}
 				});
 				if (blueprint.blueprint && blueprint.blueprint.tiles) blueprint.blueprint.tiles.forEach(e => {
+					if (e.name === "refined-hazard-concrete-right" || e.name === "refined-hazard-concrete-left") {
+						e.name = "refined-hazard-concrete";
+					}
 					if (entities[e.name] == undefined) entities[e.name] = 0;
 					entities[e.name]++;
 					if (e.items !== undefined) {
