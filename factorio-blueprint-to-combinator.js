@@ -27,6 +27,7 @@ let convert = () => {
     let decodedInputStringTextArea = document.getElementById("decodedInputString");
     let decodedOutputStringTextArea = document.getElementById("decodedOutputString");
     let maxSignalCount = document.getElementById("maxSignalCount").value;
+    let includeRequesterChests = document.getElementById("includeRequesterChests").checked;
     let itemList = document.getElementById("itemList");
 
     let inputString = inputStringTextArea.value;
@@ -106,17 +107,19 @@ let convert = () => {
     };
 
     let bp = JSON.parse(JSON.stringify(blueprintDraft));
-    let cc = null;
+    let constantCombinator = null;
+    let constantCombinatorCount = 0;
+    let requesterChest = null;
     let list = "<ul>";
 
     for (let name in entities) {
         let count = entities[name];
-        if (cc == null) {
-            cc = {
+        if (constantCombinator == null) {
+            constantCombinator = {
                 "entity_number": bp.blueprint.entities.length + 1,
                 "name": "constant-combinator",
                 "position": {
-                    "x": bp.blueprint.entities.length,
+                    "x": constantCombinatorCount,
                     "y": 0
                 },
                 "control_behavior": {
@@ -124,20 +127,58 @@ let convert = () => {
                 }
             };
 
-            bp.blueprint.entities.push(cc);
+            if (includeRequesterChests) {
+                constantCombinator.connections = {
+                    "1": {
+                        "green": [
+                            {
+                                "entity_id": bp.blueprint.entities.length + 2
+                            }
+                        ]
+                    }
+                }
+                requesterChest = {
+                    "entity_number": bp.blueprint.entities.length + 2,
+                    "name": "logistic-chest-requester",
+                    "position": {
+                        "x": constantCombinatorCount,
+                        "y": 1
+                    },
+                    "control_behavior": {
+                        "circuit_mode_of_operation": 1
+                    },
+                    "connections": {
+                        "1": {
+                            "green": [
+                                {
+                                    "entity_id": bp.blueprint.entities.length + 1
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+
+            bp.blueprint.entities.push(constantCombinator);
+
+            if (includeRequesterChests) {
+                bp.blueprint.entities.push(requesterChest);
+            }
+
+            constantCombinatorCount++;
         }
 
-        cc.control_behavior.filters.push({
+        constantCombinator.control_behavior.filters.push({
             "signal": {
                 "type": "item",
                 "name": name
             },
             "count": count,
-            "index": cc.control_behavior.filters.length + 1
+            "index": constantCombinator.control_behavior.filters.length + 1
         });
 
-        if (cc.control_behavior.filters.length == maxSignalCount) {
-            cc = null;
+        if (constantCombinator.control_behavior.filters.length == maxSignalCount) {
+            constantCombinator = null;
         }
 
         list += "<li>" + count + "x " + name + "</li>";

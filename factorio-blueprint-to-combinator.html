@@ -1,47 +1,125 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="utf-8">
-    <title>Factorio blueprint entities and items to constant combinator</title>
+	<meta charset="utf-8">
+	<title>Factorio blueprint entities and items to constant combinator</title>
 	<style>
 		textarea {
 			width: 450px;
 			height: 200px;
 		}
-    </style>
+
+		#example {
+			text-align: center;
+			display: inline-block;
+		}
+
+		#example img {
+			max-width: 500px;
+		}
+
+		a,
+		a:visited,
+		a:hover,
+		a:active {
+			color: blue;
+		}
+
+		a.black,
+		a.black:visited,
+		a.black:hover,
+		a.black:active {
+			color: black;
+		}
+	</style>
 	<script src="pako.min.js"></script>
 	<script src="base64.js"></script>
 	<script src="factorio-blueprint-to-combinator.js"></script>
 </head>
+
 <body>
-<h1>Factorio blueprint entities and items to constant combinator</h1>
+	<h1>Factorio blueprint entities and items to constant combinator</h1>
 
-<label for="inputString">Input Blueprint String</label><br/>
-<textarea id="inputString" onclick="this.focus();this.select()" onchange="convert()" onkeyup="convert()" placeholder="Paste blueprint string here"></textarea><br/>
-<br/>
+	<p>
+		This simple script takes a factorio blueprint string and converts it to constant combinators holding the signals
+		of items needed to build the blueprint.
+		<br />
+		Tested with 0.16 but as long as the bp string format does not change it should work in the future as well.
+		<br />
+		Thanks to <a href="https://www.reddit.com/user/Tmin10" target="_blank">u/Tmin10</a>
+		and his <a href="https://factorio.tmin10.ru/" target="_blank">Factorio 0.15 blueprints decoder/encoder</a>
+		(see <a
+			href="https://www.reddit.com/r/factorio/comments/6ffrvx/i_write_a_simple_decoderencoder_for_factorio_015/"
+			target="_blank">original
+			post on reddit</a>)
+	</p>
 
-<label for="maxSignalCount">Maximum signals per constant combinator</label><br/>
-<input id="maxSignalCount" type="number" min="1" max="18" step="1" value="12" onchange="convert()"/><br/>
-<br/>
+	<p>
+		Please report any issues on the GitHub page: <a
+			href="https://github.com/JensForstmann/Factorio-Blueprint-To-Combinator"
+			target="_blank">JensForstmann/Factorio-Blueprint-To-Combinator</a>,
+		thanks!
+	</p>
 
-<label for="outputString">Output Blueprint String</label><br/>
-<textarea id="outputString" onclick="this.focus();this.select()"></textarea><br/>
-<br/>
-Item List
-<span id="itemList"></span>
+	<p>
+		<b><i>Scroll down for some <a href="#_example" class="black">screenshots</a>.</i></b>
+	</p>
 
-<br/>
-<br/>
-<br/>
-<hr/>
-<br/>
-<br/>
+	<br />
 
-<label for="decodedInputString">Debug: Decoded Input</label><br/>
-<textarea id="decodedInputString" class="spoiler"></textarea><br/>
+	<a name="_inputString"></a>
+	<label for="inputString">Input Blueprint String</label><br />
+	<textarea id="inputString" onclick="this.focus();this.select()" onchange="convert()" onkeyup="convert()"
+		placeholder="Paste blueprint string here"></textarea><br />
+	<br />
 
-<label for="decodedOutputString">Debug: Decoded Output</label><br/>
-<textarea id="decodedOutputString" class="spoiler"></textarea><br/>
+	<a name="_maxSignalCount"></a>
+	<label for="maxSignalCount">Maximum signals per constant combinator</label><br />
+	<input id="maxSignalCount" type="number" min="1" max="18" step="1" value="1" onchange="convert()" /><br />
+	<br />
+
+	<a name="_includeRequesterChests"></a>
+	<label for="includeRequesterChests">Include requester chests</label><br />
+	<input id="includeRequesterChests" type="checkbox" checked onchange="convert()" /><br />
+	<br />
+
+	<a name="_outputString"></a>
+	<label for="outputString">Output Blueprint String</label><br />
+	<textarea id="outputString" onclick="this.focus();this.select()"></textarea><br />
+	<br />
+	Item List
+	<span id="itemList"></span>
+
+	<br />
+	<br />
+	<br />
+
+	
+	<h2><a name="_example"></a>Screenshots / Example</h2>
+	<p id="example">
+		<img src="images/example_blueprint.png" />
+		<br /> 🡇 <br />
+		Export Blueprint String and paste into <a href="#_inputString" class="black">Input Blueprint String</a>
+		<br /> 🡇 <br />
+		Copy <a href="#_outputString" class="black">Output Blueprint String</a> and import into Factorio
+		<br /> 🡇 <br />
+		<img src="images/example_outcome.png" />
+		<br /> 🡇 <br />
+		<img src="images/example_requester.png" />
+	</p>
+
+	<br />
+	<br />
+
+	<h2><a name="_debug"></a>Debug Stuff</h2>
+
+	<label for="decodedInputString">Debug: Decoded Input</label><br />
+	<textarea id="decodedInputString" class="spoiler"></textarea><br />
+
+	<label for="decodedOutputString">Debug: Decoded Output</label><br />
+	<textarea id="decodedOutputString" class="spoiler"></textarea><br />
 
 </body>
+
 </html>
