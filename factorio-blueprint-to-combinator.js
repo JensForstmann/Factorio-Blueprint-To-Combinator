@@ -28,6 +28,7 @@ let convert = () => {
     let decodedOutputStringTextArea = document.getElementById("decodedOutputString");
     let maxSignalCount = document.getElementById("maxSignalCount").value;
     let includeRequesterChests = document.getElementById("includeRequesterChests").checked;
+    let requestFromBufferChests = document.getElementById("requestFromBufferChests").checked;
     let itemList = document.getElementById("itemList");
 
     let inputString = inputStringTextArea.value;
@@ -156,6 +157,10 @@ let convert = () => {
                             ]
                         }
                     }
+                }
+
+                if (requestFromBufferChests) {
+                    requesterChest.request_from_buffers = true;
                 }
             }
 
