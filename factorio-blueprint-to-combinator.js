@@ -21,6 +21,50 @@ let obj2bpstring = (obj) => {
     );
 };
 
+const convertMap = {
+    "straight-rail": {
+        item: "rail"
+    },
+    "curved-rail": {
+        item: "rail",
+        count: 4
+    },
+    "chute-miniloader-inserter": {
+        item: "chute-miniloader"
+    },
+    "miniloader-inserter": {
+        item: "miniloader"
+    },
+    "fast-miniloader-inserter": {
+        item: "fast-miniloader"
+    },
+    "express-miniloader-inserter": {
+        item: "express-miniloader"
+    },
+    "space-miniloader-inserter": {
+        item: "space-miniloader"
+    },
+    "filter-miniloader-inserter": {
+        item: "filter-miniloader"
+    },
+    "fast-filter-miniloader-inserter": {
+        item: "fast-filter-miniloader"
+    },
+    "express-filter-miniloader-inserter": {
+        item: "express-filter-miniloader"
+    },
+    "space-filter-miniloader-inserter": {
+        item: "space-filter-miniloader"
+    }
+};
+
+let convertEntity2Item = (entity) => {
+    return {
+        item: (convertMap[entity] && convertMap[entity].item !== undefined) ? convertMap[entity].item : entity,
+        count: (convertMap[entity] && convertMap[entity].count !== undefined) ? convertMap[entity].count : 1
+    };
+}
+
 let convert = () => {
     let inputStringTextArea = document.getElementById("inputString");
     let outputStringTextArea = document.getElementById("outputString");
@@ -54,14 +98,8 @@ let convert = () => {
 
     blueprints.forEach(blueprint => {
         if (blueprint.blueprint && blueprint.blueprint.entities) blueprint.blueprint.entities.forEach(e => {
-            let inc = 1;
-            if (e.name === "straight-rail") {
-                e.name = "rail";
-            }
-            if (e.name === "curved-rail") {
-                inc = 4;
-                e.name = "rail";
-            }
+            let inc = convertEntity2Item(e.name).count;
+            e.name = convertEntity2Item(e.name).item;
             if (entities[e.name] == undefined) entities[e.name] = 0;
             entities[e.name] += inc;
             if (e.items !== undefined) {
