@@ -55,6 +55,12 @@ const convertMap = {
     },
     "space-filter-miniloader-inserter": {
         item: "space-filter-miniloader"
+    },
+    "railunloader-placement-proxy": {
+        item: "railunloader"
+    },
+    "railloader-placement-proxy": {
+        item: "railloader"
     }
 };
 
