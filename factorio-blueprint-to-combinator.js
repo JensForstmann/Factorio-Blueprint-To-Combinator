@@ -61,6 +61,12 @@ const convertMap = {
     },
     "railloader-placement-proxy": {
         item: "railloader"
+    },
+    "railloader-chest": {
+        item: "railunloader"
+    },
+    "railunloader-chest": {
+        item: "railloader"
     }
 };
 
