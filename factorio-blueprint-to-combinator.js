@@ -63,10 +63,10 @@ const convertMap = {
         item: "railloader"
     },
     "railloader-chest": {
-        item: "railunloader"
+        item: "railloader"
     },
     "railunloader-chest": {
-        item: "railloader"
+        item: "railunloader"
     }
 };
 
