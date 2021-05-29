@@ -21,53 +21,10 @@ let obj2bpstring = (obj) => {
     );
 };
 
-const convertMap = {
-    "straight-rail": {
-        item: "rail"
-    },
-    "curved-rail": {
-        item: "rail",
-        count: 4
-    },
-    "chute-miniloader-inserter": {
-        item: "chute-miniloader"
-    },
-    "miniloader-inserter": {
-        item: "miniloader"
-    },
-    "fast-miniloader-inserter": {
-        item: "fast-miniloader"
-    },
-    "express-miniloader-inserter": {
-        item: "express-miniloader"
-    },
-    "space-miniloader-inserter": {
-        item: "space-miniloader"
-    },
-    "filter-miniloader-inserter": {
-        item: "filter-miniloader"
-    },
-    "fast-filter-miniloader-inserter": {
-        item: "fast-filter-miniloader"
-    },
-    "express-filter-miniloader-inserter": {
-        item: "express-filter-miniloader"
-    },
-    "space-filter-miniloader-inserter": {
-        item: "space-filter-miniloader"
-    },
-    "railunloader-placement-proxy": {
-        item: "railunloader"
-    },
-    "railloader-placement-proxy": {
-        item: "railloader"
-    }
-};
-
 let convertEntity2Item = (entity) => {
     return {
-        item: (convertMap[entity] && convertMap[entity].item !== undefined) ? convertMap[entity].item : entity,
-        count: (convertMap[entity] && convertMap[entity].count !== undefined) ? convertMap[entity].count : 1
+        item: (entityItemMap[entity] && entityItemMap[entity].item !== undefined) ? entityItemMap[entity].item : entity,
+        count: (entityItemMap[entity] && entityItemMap[entity].count !== undefined) ? entityItemMap[entity].count : 1
     };
 }
 
