@@ -74,11 +74,10 @@ let convert = () => {
             }
         });
         if (blueprint.blueprint && blueprint.blueprint.tiles) blueprint.blueprint.tiles.forEach(e => {
-            if (e.name === "refined-hazard-concrete-right" || e.name === "refined-hazard-concrete-left") {
-                e.name = "refined-hazard-concrete";
-            }
+            let inc = convertEntity2Item(e.name).count;
+            e.name = convertEntity2Item(e.name).item;
             if (entities[e.name] == undefined) entities[e.name] = 0;
-            entities[e.name]++;
+            entities[e.name] += inc;
             if (e.items !== undefined) {
                 for (let name in e.items) {
                     let count = e.items[name];
