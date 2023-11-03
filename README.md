@@ -6,8 +6,8 @@
 
 This app has been moved to **Gaming Tools**:
 
-- Web app: https://gaming-tools.jensforstmann.vercel.app/factorio/blueprint-to-constant-combinator
-- Repository: https://github.com/JensForstmann/gaming-tools
+- Web app: [https://gaming-tools.jensforstmann.vercel.app/factorio/blueprint-to-constant-combinator](https://gaming-tools.jensforstmann.vercel.app/factorio/blueprint-to-constant-combinator)
+- Repository: [https://github.com/JensForstmann/gaming-tools](https://github.com/JensForstmann/gaming-tools)
 
 *Please change your favorites/bookmarks of your browser!*
 
